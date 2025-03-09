@@ -7,17 +7,20 @@ def load_words(wordlist_path):
     with open(wordlist_path, 'r', encoding='utf-8') as f:
         return set(f.read().splitlines())
 
-def search_files(root_dir, words, min_matches):
+def search_files(root_dir, words, min_matches, ignore_windows):
     """Durchsucht alle Dateien im root_dir nach mindestens min_matches der Wörter."""
     matching_files = []
     print(f"Zähle Dateien in {root_dir}... Bitte warten.")
     
-    total_files = sum(len(files) for _, _, files in os.walk(root_dir))
+    total_files = sum(len(files) for dirpath, _, files in os.walk(root_dir) if not (ignore_windows and "Windows" in dirpath))
     print(f"Anzahl der zu durchsuchenden Dateien: {total_files}")
     
     processed_files = 0
     
     for dirpath, _, filenames in os.walk(root_dir):
+        if ignore_windows and "Windows" in dirpath:
+            continue  # Windows-Ordner ignorieren, falls gewünscht
+
         for filename in filenames:
             file_path = os.path.join(dirpath, filename)
             try:
@@ -43,9 +46,10 @@ if __name__ == "__main__":
     
     search_dir = input("Gib das Laufwerk oder Verzeichnis ein, das durchsucht werden soll (z.B. C:/ oder D:/): ")
     min_matches = int(input("Gib die Mindestanzahl der Wörter an, die in einer Datei vorkommen müssen: "))
+    ignore_windows = input("Soll der Windows-Ordner ignoriert werden? (ja/nein): ").strip().lower() == "ja"
     
     words = load_words(wordlist_path)
-    result_files = search_files(search_dir, words, min_matches)
+    result_files = search_files(search_dir, words, min_matches, ignore_windows)
   
     print("Gefundene Dateien:")
     for file in result_files:
