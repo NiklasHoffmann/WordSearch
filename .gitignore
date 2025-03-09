@@ -10,7 +10,6 @@ venv/
 PyInstaller spezifische Dateien
 
 build/
-dist/
 *.spec
 
 Log- und Debug-Dateien
