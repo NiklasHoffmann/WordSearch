@@ -1,0 +1,35 @@
+Ignoriere Python spezifische Dateien
+
+pycache/
+*.py[cod]
+
+Virtuelle Umgebung
+
+venv/
+
+PyInstaller spezifische Dateien
+
+build/
+dist/
+*.spec
+
+Log- und Debug-Dateien
+
+*.log
+*.tmp
+
+IDE-spezifische Dateien
+
+.vscode/
+.idea/
+*.iml
+
+Betriebssystemspezifische Dateien
+
+.DS_Store
+Thumbs.db
+
+Persönliche Konfigurationsdateien
+
+.env
+*.bak
